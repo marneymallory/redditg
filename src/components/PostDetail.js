@@ -8,9 +8,9 @@ function PostDetail(props){
     <React.Fragment>
       <h1>Post Detail</h1>
       <h3>{Post.location} - {Post.names}</h3>
-      <p><em>{post.issue}</em></p>
+      <p><em>{Post.issue}</em></p>
       <button onClick={ props.onClickingEdit }>Update Post</button>
-      <button onClick={()=> onClickingDelete(post.id) }>Close Post</button>
+      <button onClick={()=> onClickingDelete(Post.id) }>Close Post</button>
       <hr/>
     </React.Fragment>
   );
@@ -21,5 +21,5 @@ PostDetail.propTypes = {
   onClickingDelete: PropTypes.func,
   onClickingEdit: PropTypes.func
 };
-x
+
 export default PostDetail;

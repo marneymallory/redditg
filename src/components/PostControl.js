@@ -1,21 +1,31 @@
 import React from "react";
 import NewPostForm from "./NewPostForm";
-import PostList from "./PostList";
+import PostFeed from "./PostFeed";
 import PostDetail from "./PostDetail";
 import EditPostForm from "./EditPostForm";
 import { connect } from "react-redux";
-import Post from "./Post";
 import PropTypes from "prop-types";
 
 class PostControl extends React.Component {
   constructor(props) {
-    super(props);
-    console.log(props);
+    super(props); 
+    // console.log(props);
     this.state = {
       selectedPost: null,
       editing: false,
     };
   }
+    // : extends operator
+    // thisChildClass : thisParentClass. (has properties like dad bod)
+    // right to left. 
+    // thisChildClass now has a dadDod.
+    //class of postControl will be given to react components. so y'all cal talk to each other via props & state.
+  
+
+  // if its nothing/not selected we will do the else statement
+  // which calls our form-visible-reducer.js file/function via "dispatch"
+  // which is already set to false//
+  // basically if its nothing don't show the form. 
 
   handleClick = () => {
     if (this.state.selectedPost != null) {
@@ -23,7 +33,7 @@ class PostControl extends React.Component {
         selectedPost: null,
         editing: false,
       });
-    } else {
+    } else { 
       const { dispatch } = this.props;
       const action = {
         type: "TOGGLE_FORM",
@@ -31,12 +41,12 @@ class PostControl extends React.Component {
       dispatch(action);
     }
   };
-
+ 
   handleAddingNewPostToList = (newPost) => {
     const { dispatch } = this.props;
     const { id, names, location, issue } = newPost;
     const action = {
-      type: "ADD_Post",
+      type: "ADD_POST",
       id: id,
       names: names,
       location: location,
@@ -50,14 +60,14 @@ class PostControl extends React.Component {
   };
 
   handleChangingSelectedPost = (id) => {
-    const selectedPost = this.props.masterPostList[id];
+    const selectedPost = this.props.masterPostFeed[id];
     this.setState({ selectedPost: selectedPost });
   };
 
   handleDeletingPost = (id) => {
     const { dispatch } = this.props;
     const action = {
-      type: "DELETE_Post",
+      type: "DELETE_POST",
       id: id,
     };
     dispatch(action);
@@ -68,11 +78,11 @@ class PostControl extends React.Component {
     this.setState({ editing: true });
   };
 
-  handleEditingPostInList = (PostToEdit) => {
+  handleEditingPostInFeed = (PostToEdit) => {
     const { dispatch } = this.props;
     const { id, names, location, issue } = PostToEdit;
     const action = {
-      type: "ADD_Post",
+      type: "ADD_POST",
       id: id,
       names: names,
       location: location,
@@ -88,11 +98,12 @@ class PostControl extends React.Component {
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
+
     if (this.state.editing) {
       currentlyVisibleState = (
         <EditPostForm
           Post={this.state.selectedPost}
-          onEditPost={this.handleEditingPostInList}
+          onEditPost={this.handleEditingPostInFeed}
         />
       );
       buttonText = "Return to Post List";
@@ -112,8 +123,8 @@ class PostControl extends React.Component {
       buttonText = "Return to Post List";
     } else {
       currentlyVisibleState = (
-        <PostList
-          PostList={this.props.masterPostList}
+        <PostFeed
+          postFeed={this.props.masterPostFeed}
           onPostSelection={this.handleChangingSelectedPost}
         />
       );
@@ -128,17 +139,14 @@ class PostControl extends React.Component {
   }
 }
 
-PostControl.prototype = {
-  masterPostList: PropTypes.object,
-};
 PostControl.propTypes = {
-  masterPostList: PropTypes.object,
+  masterPostFeed: PropTypes.object,
   formVisibleOnPage: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
   return {
-    masterPostList: state.masterPostList,
+    masterPostFeed: state.masterPostFeed,
     formVisibleOnPage: state.formVisibleOnPage,
   };
 };

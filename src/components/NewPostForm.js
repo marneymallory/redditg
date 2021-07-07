@@ -9,7 +9,7 @@ function NewPostForm(props){
     event.preventDefault();
     props.onNewPostCreation({names: event.target.names.value, location: event.target.location.value, issue: event.target.issue.value, id: v4()});
   }
-
+   
   return (
     <React.Fragment>
       <ReusableForm 

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Post from "./Post";
 
+
 function PostFeed(props){
   return (
     <React.Fragment>
@@ -20,7 +21,7 @@ function PostFeed(props){
 }
 
 PostFeed.propTypes = {
-  ticketList: PropTypes.object,
+  PostFeed: PropTypes.object,
   onPostSelection: PropTypes.func
 };
 
